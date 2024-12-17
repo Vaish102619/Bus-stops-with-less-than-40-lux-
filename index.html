@@ -1,0 +1,1392 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Route119_1.js"></script>
+        <script src="data/Route159A_2.js"></script>
+        <script src="data/Route26_3.js"></script>
+        <script src="data/Route2A_4.js"></script>
+        <script src="data/Route4_5.js"></script>
+        <script src="data/Route48C_6.js"></script>
+        <script src="data/Route102K_7.js"></script>
+        <script src="data/Route32B_8.js"></script>
+        <script src="data/Route17D_9.js"></script>
+        <script src="data/Route29C_10.js"></script>
+        <script src="data/Busstopswith40LUXReadings_11.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[12.85940145520101,80.01212724643909],[13.26694242551287,80.41543768764737]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            map.setMaxBounds(map.getBounds());
+        }
+        map.createPane('pane_OpenStreetMap_0');
+        map.getPane('pane_OpenStreetMap_0').style.zIndex = 400;
+        var layer_OpenStreetMap_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop_Route119_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td class="visible-with-data" id="fid">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route119_1_0() {
+            return {
+                pane: 'pane_Route119_1',
+                opacity: 1,
+                color: 'rgba(225,89,137,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route119_1');
+        map.getPane('pane_Route119_1').style.zIndex = 401;
+        map.getPane('pane_Route119_1').style['mix-blend-mode'] = 'normal';
+        var layer_Route119_1 = new L.geoJson(json_Route119_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route119_1',
+            layerName: 'layer_Route119_1',
+            pane: 'pane_Route119_1',
+            onEachFeature: pop_Route119_1,
+            style: style_Route119_1_0,
+        });
+        bounds_group.addLayer(layer_Route119_1);
+        map.addLayer(layer_Route119_1);
+        function pop_Route159A_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td class="visible-with-data" id="fid">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route159A_2_0() {
+            return {
+                pane: 'pane_Route159A_2',
+                opacity: 1,
+                color: 'rgba(125,139,143,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route159A_2');
+        map.getPane('pane_Route159A_2').style.zIndex = 402;
+        map.getPane('pane_Route159A_2').style['mix-blend-mode'] = 'normal';
+        var layer_Route159A_2 = new L.geoJson(json_Route159A_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route159A_2',
+            layerName: 'layer_Route159A_2',
+            pane: 'pane_Route159A_2',
+            onEachFeature: pop_Route159A_2,
+            style: style_Route159A_2_0,
+        });
+        bounds_group.addLayer(layer_Route159A_2);
+        map.addLayer(layer_Route159A_2);
+        function pop_Route26_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td class="visible-with-data" id="fid">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route26_3_0() {
+            return {
+                pane: 'pane_Route26_3',
+                opacity: 1,
+                color: 'rgba(114,155,111,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route26_3');
+        map.getPane('pane_Route26_3').style.zIndex = 403;
+        map.getPane('pane_Route26_3').style['mix-blend-mode'] = 'normal';
+        var layer_Route26_3 = new L.geoJson(json_Route26_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route26_3',
+            layerName: 'layer_Route26_3',
+            pane: 'pane_Route26_3',
+            onEachFeature: pop_Route26_3,
+            style: style_Route26_3_0,
+        });
+        bounds_group.addLayer(layer_Route26_3);
+        map.addLayer(layer_Route26_3);
+        function pop_Route2A_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td class="visible-with-data" id="fid">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route2A_4_0() {
+            return {
+                pane: 'pane_Route2A_4',
+                opacity: 1,
+                color: 'rgba(53,174,100,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route2A_4');
+        map.getPane('pane_Route2A_4').style.zIndex = 404;
+        map.getPane('pane_Route2A_4').style['mix-blend-mode'] = 'normal';
+        var layer_Route2A_4 = new L.geoJson(json_Route2A_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route2A_4',
+            layerName: 'layer_Route2A_4',
+            pane: 'pane_Route2A_4',
+            onEachFeature: pop_Route2A_4,
+            style: style_Route2A_4_0,
+        });
+        bounds_group.addLayer(layer_Route2A_4);
+        map.addLayer(layer_Route2A_4);
+        function pop_Route4_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td class="visible-with-data" id="fid">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">id</th>\
+                        <td class="visible-with-data" id="id">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route4_5_0() {
+            return {
+                pane: 'pane_Route4_5',
+                opacity: 1,
+                color: 'rgba(141,90,153,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route4_5');
+        map.getPane('pane_Route4_5').style.zIndex = 405;
+        map.getPane('pane_Route4_5').style['mix-blend-mode'] = 'normal';
+        var layer_Route4_5 = new L.geoJson(json_Route4_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route4_5',
+            layerName: 'layer_Route4_5',
+            pane: 'pane_Route4_5',
+            onEachFeature: pop_Route4_5,
+            style: style_Route4_5_0,
+        });
+        bounds_group.addLayer(layer_Route4_5);
+        map.addLayer(layer_Route4_5);
+        function pop_Route48C_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td class="visible-with-data" id="fid">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route48C_6_0() {
+            return {
+                pane: 'pane_Route48C_6',
+                opacity: 1,
+                color: 'rgba(109,182,181,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route48C_6');
+        map.getPane('pane_Route48C_6').style.zIndex = 406;
+        map.getPane('pane_Route48C_6').style['mix-blend-mode'] = 'normal';
+        var layer_Route48C_6 = new L.geoJson(json_Route48C_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route48C_6',
+            layerName: 'layer_Route48C_6',
+            pane: 'pane_Route48C_6',
+            onEachFeature: pop_Route48C_6,
+            style: style_Route48C_6_0,
+        });
+        bounds_group.addLayer(layer_Route48C_6);
+        map.addLayer(layer_Route48C_6);
+        function pop_Route102K_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td class="visible-with-data" id="fid">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route102K_7_0() {
+            return {
+                pane: 'pane_Route102K_7',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route102K_7');
+        map.getPane('pane_Route102K_7').style.zIndex = 407;
+        map.getPane('pane_Route102K_7').style['mix-blend-mode'] = 'normal';
+        var layer_Route102K_7 = new L.geoJson(json_Route102K_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route102K_7',
+            layerName: 'layer_Route102K_7',
+            pane: 'pane_Route102K_7',
+            onEachFeature: pop_Route102K_7,
+            style: style_Route102K_7_0,
+        });
+        bounds_group.addLayer(layer_Route102K_7);
+        map.addLayer(layer_Route102K_7);
+        function pop_Route32B_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td class="visible-with-data" id="fid">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route32B_8_0() {
+            return {
+                pane: 'pane_Route32B_8',
+                opacity: 1,
+                color: 'rgba(213,180,60,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route32B_8');
+        map.getPane('pane_Route32B_8').style.zIndex = 408;
+        map.getPane('pane_Route32B_8').style['mix-blend-mode'] = 'normal';
+        var layer_Route32B_8 = new L.geoJson(json_Route32B_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route32B_8',
+            layerName: 'layer_Route32B_8',
+            pane: 'pane_Route32B_8',
+            onEachFeature: pop_Route32B_8,
+            style: style_Route32B_8_0,
+        });
+        bounds_group.addLayer(layer_Route32B_8);
+        map.addLayer(layer_Route32B_8);
+        function pop_Route17D_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">begin</th>\
+                        <td class="visible-with-data" id="begin">' + (feature.properties['begin'] !== null ? autolinker.link(feature.properties['begin'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">end</th>\
+                        <td class="visible-with-data" id="end">' + (feature.properties['end'] !== null ? autolinker.link(feature.properties['end'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route17D_9_0() {
+            return {
+                pane: 'pane_Route17D_9',
+                opacity: 1,
+                color: 'rgba(231,113,72,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 7.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route17D_9');
+        map.getPane('pane_Route17D_9').style.zIndex = 409;
+        map.getPane('pane_Route17D_9').style['mix-blend-mode'] = 'normal';
+        var layer_Route17D_9 = new L.geoJson(json_Route17D_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route17D_9',
+            layerName: 'layer_Route17D_9',
+            pane: 'pane_Route17D_9',
+            onEachFeature: pop_Route17D_9,
+            style: style_Route17D_9_0,
+        });
+        bounds_group.addLayer(layer_Route17D_9);
+        map.addLayer(layer_Route17D_9);
+        function pop_Route29C_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td class="visible-with-data" id="fid">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Route29C_10_0() {
+            return {
+                pane: 'pane_Route29C_10',
+                opacity: 1,
+                color: 'rgba(239,136,39,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route29C_10');
+        map.getPane('pane_Route29C_10').style.zIndex = 410;
+        map.getPane('pane_Route29C_10').style['mix-blend-mode'] = 'normal';
+        var layer_Route29C_10 = new L.geoJson(json_Route29C_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route29C_10',
+            layerName: 'layer_Route29C_10',
+            pane: 'pane_Route29C_10',
+            onEachFeature: pop_Route29C_10,
+            style: style_Route29C_10_0,
+        });
+        bounds_group.addLayer(layer_Route29C_10);
+        map.addLayer(layer_Route29C_10);
+        function pop_Busstopswith40LUXReadings_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">UID</th>\
+                        <td class="visible-with-data" id="UID">' + (feature.properties['UID'] !== null ? autolinker.link(feature.properties['UID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Bus route</th>\
+                        <td class="visible-with-data" id="Bus route">' + (feature.properties['Bus route'] !== null ? autolinker.link(feature.properties['Bus route'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">A4. Bus stop location name</th>\
+                        <td class="visible-with-data" id="A4. Bus stop location name">' + (feature.properties['A4. Bus stop location name'] !== null ? autolinker.link(feature.properties['A4. Bus stop location name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">A1. Zone</th>\
+                        <td class="visible-with-data" id="A1. Zone">' + (feature.properties['A1. Zone'] !== null ? autolinker.link(feature.properties['A1. Zone'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">A6a. Bus stop location on the side of the road -</th>\
+                        <td class="visible-with-data" id="A6a. Bus stop location on the side of the road -">' + (feature.properties['A6a. Bus stop location on the side of the road -'] !== null ? autolinker.link(feature.properties['A6a. Bus stop location on the side of the road -'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Bus stop owned by GCC (Yes/No)</th>\
+                        <td class="visible-with-data" id="Bus stop owned by GCC (Yes/No)">' + (feature.properties['Bus stop owned by GCC (Yes/No)'] !== null ? autolinker.link(feature.properties['Bus stop owned by GCC (Yes/No)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1. Does the bus stop have a shelter?</th>\
+                        <td class="visible-with-data" id="Q1. Does the bus stop have a shelter?">' + (feature.properties['Q1. Does the bus stop have a shelter?'] !== null ? autolinker.link(feature.properties['Q1. Does the bus stop have a shelter?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1a. How many shelters does the bus stop have ?</th>\
+                        <td class="visible-with-data" id="Q1a. How many shelters does the bus stop have ?">' + (feature.properties['Q1a. How many shelters does the bus stop have ?'] !== null ? autolinker.link(feature.properties['Q1a. How many shelters does the bus stop have ?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q2. What material is the bus stop shelter structure made of?</th>\
+                        <td class="visible-with-data" id="Q2. What material is the bus stop shelter structure made of?">' + (feature.properties['Q2. What material is the bus stop shelter structure made of?'] !== null ? autolinker.link(feature.properties['Q2. What material is the bus stop shelter structure made of?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 1</th>\
+                        <td class="visible-with-data" id="Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 1">' + (feature.properties['Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 1'] !== null ? autolinker.link(feature.properties['Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 2</th>\
+                        <td class="visible-with-data" id="Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 2">' + (feature.properties['Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 2'] !== null ? autolinker.link(feature.properties['Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 3</th>\
+                        <td class="visible-with-data" id="Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 3">' + (feature.properties['Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 3'] !== null ? autolinker.link(feature.properties['Q1a1. What is the condition of the roof of the shelter at the bus stop?_Shelter 3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q2a. Is it damaged?</th>\
+                        <td class="visible-with-data" id="Q2a. Is it damaged?">' + (feature.properties['Q2a. Is it damaged?'] !== null ? autolinker.link(feature.properties['Q2a. Is it damaged?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q3. Does the bus shelter have a_Back panel (typically used for displaying advertisements)?</th>\
+                        <td class="visible-with-data" id="Q3. Does the bus shelter have a_Back panel (typically used for displaying advertisements)?">' + (feature.properties['Q3. Does the bus shelter have a_Back panel (typically used for displaying advertisements)?'] !== null ? autolinker.link(feature.properties['Q3. Does the bus shelter have a_Back panel (typically used for displaying advertisements)?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q3. Does the bus shelter have a_Top panel (typically used for displaying advertisements)?</th>\
+                        <td class="visible-with-data" id="Q3. Does the bus shelter have a_Top panel (typically used for displaying advertisements)?">' + (feature.properties['Q3. Does the bus shelter have a_Top panel (typically used for displaying advertisements)?'] !== null ? autolinker.link(feature.properties['Q3. Does the bus shelter have a_Top panel (typically used for displaying advertisements)?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1a2. Is there any space or area behind the bus shelter (that could potentially be used for unauthorized or undesirable activities such as loitering or urination)?</th>\
+                        <td class="visible-with-data" id="Q1a2. Is there any space or area behind the bus shelter (that could potentially be used for unauthorized or undesirable activities such as loitering or urination)?">' + (feature.properties['Q1a2. Is there any space or area behind the bus shelter (that could potentially be used for unauthorized or undesirable activities such as loitering or urination)?'] !== null ? autolinker.link(feature.properties['Q1a2. Is there any space or area behind the bus shelter (that could potentially be used for unauthorized or undesirable activities such as loitering or urination)?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1b. Where do passengers typically wait for the bus?_Stand at the bus stop</th>\
+                        <td class="visible-with-data" id="Q1b. Where do passengers typically wait for the bus?_Stand at the bus stop">' + (feature.properties['Q1b. Where do passengers typically wait for the bus?_Stand at the bus stop'] !== null ? autolinker.link(feature.properties['Q1b. Where do passengers typically wait for the bus?_Stand at the bus stop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1b. Where do passengers typically wait for the bus?_Wait in nearby buildings or structures (e.g., shops, cafes)</th>\
+                        <td class="visible-with-data" id="Q1b. Where do passengers typically wait for the bus?_Wait in nearby buildings or structures (e.g., shops, cafes)">' + (feature.properties['Q1b. Where do passengers typically wait for the bus?_Wait in nearby buildings or structures (e.g., shops, cafes)'] !== null ? autolinker.link(feature.properties['Q1b. Where do passengers typically wait for the bus?_Wait in nearby buildings or structures (e.g., shops, cafes)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1b. Where do passengers typically wait for the bus?_wait under the trees in the vicinity</th>\
+                        <td class="visible-with-data" id="Q1b. Where do passengers typically wait for the bus?_wait under the trees in the vicinity">' + (feature.properties['Q1b. Where do passengers typically wait for the bus?_wait under the trees in the vicinity'] !== null ? autolinker.link(feature.properties['Q1b. Where do passengers typically wait for the bus?_wait under the trees in the vicinity'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1b. Where do passengers typically wait for the bus?_Others</th>\
+                        <td class="visible-with-data" id="Q1b. Where do passengers typically wait for the bus?_Others">' + (feature.properties['Q1b. Where do passengers typically wait for the bus?_Others'] !== null ? autolinker.link(feature.properties['Q1b. Where do passengers typically wait for the bus?_Others'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q1b. Where do passengers typically wait for the bus?_others Specify</th>\
+                        <td class="visible-with-data" id="Q1b. Where do passengers typically wait for the bus?_others Specify">' + (feature.properties['Q1b. Where do passengers typically wait for the bus?_others Specify'] !== null ? autolinker.link(feature.properties['Q1b. Where do passengers typically wait for the bus?_others Specify'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q4. Is there any seating arrangement for the bus users available at the bus stop?</th>\
+                        <td class="visible-with-data" id="Q4. Is there any seating arrangement for the bus users available at the bus stop?">' + (feature.properties['Q4. Is there any seating arrangement for the bus users available at the bus stop?'] !== null ? autolinker.link(feature.properties['Q4. Is there any seating arrangement for the bus users available at the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q5. If yes, what is the condition?</th>\
+                        <td class="visible-with-data" id="Q5. If yes, what is the condition?">' + (feature.properties['Q5. If yes, what is the condition?'] !== null ? autolinker.link(feature.properties['Q5. If yes, what is the condition?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q6. How many people can be seated at the bus stop seats at once?</th>\
+                        <td class="visible-with-data" id="Q6. How many people can be seated at the bus stop seats at once?">' + (feature.properties['Q6. How many people can be seated at the bus stop seats at once?'] !== null ? autolinker.link(feature.properties['Q6. How many people can be seated at the bus stop seats at once?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q6a. At the time of the visit, who was majorly occupying the seats?</th>\
+                        <td class="visible-with-data" id="Q6a. At the time of the visit, who was majorly occupying the seats?">' + (feature.properties['Q6a. At the time of the visit, who was majorly occupying the seats?'] !== null ? autolinker.link(feature.properties['Q6a. At the time of the visit, who was majorly occupying the seats?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q6b. At the bus stop can you spot any: Children</th>\
+                        <td class="visible-with-data" id="Q6b. At the bus stop can you spot any: Children">' + (feature.properties['Q6b. At the bus stop can you spot any: Children'] !== null ? autolinker.link(feature.properties['Q6b. At the bus stop can you spot any: Children'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q6b. At the bus stop can you spot any: Differently abled person/s</th>\
+                        <td class="visible-with-data" id="Q6b. At the bus stop can you spot any: Differently abled person/s">' + (feature.properties['Q6b. At the bus stop can you spot any: Differently abled person/s'] !== null ? autolinker.link(feature.properties['Q6b. At the bus stop can you spot any: Differently abled person/s'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q7. Is the bus stop located:</th>\
+                        <td class="visible-with-data" id="Q7. Is the bus stop located:">' + (feature.properties['Q7. Is the bus stop located:'] !== null ? autolinker.link(feature.properties['Q7. Is the bus stop located:'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q7. Is the bus stop located: Other Specify</th>\
+                        <td class="visible-with-data" id="Q7. Is the bus stop located: Other Specify">' + (feature.properties['Q7. Is the bus stop located: Other Specify'] !== null ? autolinker.link(feature.properties['Q7. Is the bus stop located: Other Specify'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q7a. Is the flooring of the bus stop even (without any potholes, cracks or uneven surface)?</th>\
+                        <td class="visible-with-data" id="Q7a. Is the flooring of the bus stop even (without any potholes, cracks or uneven surface)?">' + (feature.properties['Q7a. Is the flooring of the bus stop even (without any potholes, cracks or uneven surface)?'] !== null ? autolinker.link(feature.properties['Q7a. Is the flooring of the bus stop even (without any potholes, cracks or uneven surface)?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q8. Potholes present</th>\
+                        <td class="visible-with-data" id="Q8. Potholes present">' + (feature.properties['Q8. Potholes present'] !== null ? autolinker.link(feature.properties['Q8. Potholes present'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q8. Cracks present</th>\
+                        <td class="visible-with-data" id="Q8. Cracks present">' + (feature.properties['Q8. Cracks present'] !== null ? autolinker.link(feature.properties['Q8. Cracks present'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q8. Uneven surface present</th>\
+                        <td class="visible-with-data" id="Q8. Uneven surface present">' + (feature.properties['Q8. Uneven surface present'] !== null ? autolinker.link(feature.properties['Q8. Uneven surface present'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q9. Encroachment by shops</th>\
+                        <td class="visible-with-data" id="Q9. Encroachment by shops">' + (feature.properties['Q9. Encroachment by shops'] !== null ? autolinker.link(feature.properties['Q9. Encroachment by shops'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q9. Trees/Tree branches</th>\
+                        <td class="visible-with-data" id="Q9. Trees/Tree branches">' + (feature.properties['Q9. Trees/Tree branches'] !== null ? autolinker.link(feature.properties['Q9. Trees/Tree branches'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q9. Electricity Poles</th>\
+                        <td class="visible-with-data" id="Q9. Electricity Poles">' + (feature.properties['Q9. Electricity Poles'] !== null ? autolinker.link(feature.properties['Q9. Electricity Poles'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q9. Electric/water/telecom boxes</th>\
+                        <td class="visible-with-data" id="Q9. Electric/water/telecom boxes">' + (feature.properties['Q9. Electric/water/telecom boxes'] !== null ? autolinker.link(feature.properties['Q9. Electric/water/telecom boxes'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q9. Temporary Vendors</th>\
+                        <td class="visible-with-data" id="Q9. Temporary Vendors">' + (feature.properties['Q9. Temporary Vendors'] !== null ? autolinker.link(feature.properties['Q9. Temporary Vendors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q9. Encroachment by vehicles</th>\
+                        <td class="visible-with-data" id="Q9. Encroachment by vehicles">' + (feature.properties['Q9. Encroachment by vehicles'] !== null ? autolinker.link(feature.properties['Q9. Encroachment by vehicles'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q9. None</th>\
+                        <td class="visible-with-data" id="Q9. None">' + (feature.properties['Q9. None'] !== null ? autolinker.link(feature.properties['Q9. None'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q9. Others</th>\
+                        <td class="visible-with-data" id="Q9. Others">' + (feature.properties['Q9. Others'] !== null ? autolinker.link(feature.properties['Q9. Others'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q9. Others specify</th>\
+                        <td class="visible-with-data" id="Q9. Others specify">' + (feature.properties['Q9. Others specify'] !== null ? autolinker.link(feature.properties['Q9. Others specify'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">11. Is the waiting area at the bus stop sufficient to accommodate the passengers who are waiting to board the bus?_During daylight :</th>\
+                        <td class="visible-with-data" id="11. Is the waiting area at the bus stop sufficient to accommodate the passengers who are waiting to board the bus?_During daylight :">' + (feature.properties['11. Is the waiting area at the bus stop sufficient to accommodate the passengers who are waiting to board the bus?_During daylight :'] !== null ? autolinker.link(feature.properties['11. Is the waiting area at the bus stop sufficient to accommodate the passengers who are waiting to board the bus?_During daylight :'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">11. Is the waiting area at the bus stop sufficient to accommodate the passengers who are waiting to board the bus?_After dark :</th>\
+                        <td class="visible-with-data" id="11. Is the waiting area at the bus stop sufficient to accommodate the passengers who are waiting to board the bus?_After dark :">' + (feature.properties['11. Is the waiting area at the bus stop sufficient to accommodate the passengers who are waiting to board the bus?_After dark :'] !== null ? autolinker.link(feature.properties['11. Is the waiting area at the bus stop sufficient to accommodate the passengers who are waiting to board the bus?_After dark :'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q12. Does the road adjacent to the bus stop have a kerb?</th>\
+                        <td class="visible-with-data" id="Q12. Does the road adjacent to the bus stop have a kerb?">' + (feature.properties['Q12. Does the road adjacent to the bus stop have a kerb?'] !== null ? autolinker.link(feature.properties['Q12. Does the road adjacent to the bus stop have a kerb?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q13. What type of kerb is present there?</th>\
+                        <td class="visible-with-data" id="Q13. What type of kerb is present there?">' + (feature.properties['Q13. What type of kerb is present there?'] !== null ? autolinker.link(feature.properties['Q13. What type of kerb is present there?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q14. Is the kerb uniformly raised along its length or does it have variations?</th>\
+                        <td class="visible-with-data" id="Q14. Is the kerb uniformly raised along its length or does it have variations?">' + (feature.properties['Q14. Is the kerb uniformly raised along its length or does it have variations?'] !== null ? autolinker.link(feature.properties['Q14. Is the kerb uniformly raised along its length or does it have variations?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q15. Is the Kerb painted?</th>\
+                        <td class="visible-with-data" id="Q15. Is the Kerb painted?">' + (feature.properties['Q15. Is the Kerb painted?'] !== null ? autolinker.link(feature.properties['Q15. Is the Kerb painted?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q16. In what color is the kerb painted?</th>\
+                        <td class="visible-with-data" id="Q16. In what color is the kerb painted?">' + (feature.properties['Q16. In what color is the kerb painted?'] !== null ? autolinker.link(feature.properties['Q16. In what color is the kerb painted?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Others Specify</th>\
+                        <td class="visible-with-data" id="Others Specify">' + (feature.properties['Others Specify'] !== null ? autolinker.link(feature.properties['Others Specify'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q17. Is there a kerb ramp present at the bus stop?</th>\
+                        <td class="visible-with-data" id="Q17. Is there a kerb ramp present at the bus stop?">' + (feature.properties['Q17. Is there a kerb ramp present at the bus stop?'] !== null ? autolinker.link(feature.properties['Q17. Is there a kerb ramp present at the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q18.  Is there a tactile warning strip at the kerb side of the edge of the slope of the kerb ramp? (Yes / No)</th>\
+                        <td class="visible-with-data" id="Q18.  Is there a tactile warning strip at the kerb side of the edge of the slope of the kerb ramp? (Yes / No)">' + (feature.properties['Q18.  Is there a tactile warning strip at the kerb side of the edge of the slope of the kerb ramp? (Yes / No)'] !== null ? autolinker.link(feature.properties['Q18.  Is there a tactile warning strip at the kerb side of the edge of the slope of the kerb ramp? (Yes / No)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q19.  Is there sufficient space for the movement of a wheelchair at the kerb ramp? (Yes / No)</th>\
+                        <td class="visible-with-data" id="Q19.  Is there sufficient space for the movement of a wheelchair at the kerb ramp? (Yes / No)">' + (feature.properties['Q19.  Is there sufficient space for the movement of a wheelchair at the kerb ramp? (Yes / No)'] !== null ? autolinker.link(feature.properties['Q19.  Is there sufficient space for the movement of a wheelchair at the kerb ramp? (Yes / No)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q20. Is there any pedestrian crossing visible near the bus stop?</th>\
+                        <td class="visible-with-data" id="Q20. Is there any pedestrian crossing visible near the bus stop?">' + (feature.properties['Q20. Is there any pedestrian crossing visible near the bus stop?'] !== null ? autolinker.link(feature.properties['Q20. Is there any pedestrian crossing visible near the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q21. Is the pedestrian crossing elevated from road to match the height of the footpath?</th>\
+                        <td class="visible-with-data" id="Q21. Is the pedestrian crossing elevated from road to match the height of the footpath?">' + (feature.properties['Q21. Is the pedestrian crossing elevated from road to match the height of the footpath?'] !== null ? autolinker.link(feature.properties['Q21. Is the pedestrian crossing elevated from road to match the height of the footpath?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q22. On which side of the bus stop is the pedestrian crossing located?</th>\
+                        <td class="visible-with-data" id="Q22. On which side of the bus stop is the pedestrian crossing located?">' + (feature.properties['Q22. On which side of the bus stop is the pedestrian crossing located?'] !== null ? autolinker.link(feature.properties['Q22. On which side of the bus stop is the pedestrian crossing located?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q23. Is there any traffic signal near the bus stop (within a 50 meters distance)?</th>\
+                        <td class="visible-with-data" id="Q23. Is there any traffic signal near the bus stop (within a 50 meters distance)?">' + (feature.properties['Q23. Is there any traffic signal near the bus stop (within a 50 meters distance)?'] !== null ? autolinker.link(feature.properties['Q23. Is there any traffic signal near the bus stop (within a 50 meters distance)?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q24. Are there any speed breakers present near the bus stop (check within 50 meter of distance)?</th>\
+                        <td class="visible-with-data" id="Q24. Are there any speed breakers present near the bus stop (check within 50 meter of distance)?">' + (feature.properties['Q24. Are there any speed breakers present near the bus stop (check within 50 meter of distance)?'] !== null ? autolinker.link(feature.properties['Q24. Are there any speed breakers present near the bus stop (check within 50 meter of distance)?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q25. Are the speed breakers clearly marked and visible to drivers?</th>\
+                        <td class="visible-with-data" id="Q25. Are the speed breakers clearly marked and visible to drivers?">' + (feature.properties['Q25. Are the speed breakers clearly marked and visible to drivers?'] !== null ? autolinker.link(feature.properties['Q25. Are the speed breakers clearly marked and visible to drivers?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_a.on the sidewalks around the bus stop?_Presence of graffiti or posters</th>\
+                        <td class="visible-with-data" id="Q26a_a.on the sidewalks around the bus stop?_Presence of graffiti or posters">' + (feature.properties['Q26a_a.on the sidewalks around the bus stop?_Presence of graffiti or posters'] !== null ? autolinker.link(feature.properties['Q26a_a.on the sidewalks around the bus stop?_Presence of graffiti or posters'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_a.on the sidewalks around the bus stop?_Litter</th>\
+                        <td class="visible-with-data" id="Q26a_a.on the sidewalks around the bus stop?_Litter">' + (feature.properties['Q26a_a.on the sidewalks around the bus stop?_Litter'] !== null ? autolinker.link(feature.properties['Q26a_a.on the sidewalks around the bus stop?_Litter'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_a.on the sidewalks around the bus stop?_Occupancy by unhoused people and vagrants</th>\
+                        <td class="visible-with-data" id="Q26a_a.on the sidewalks around the bus stop?_Occupancy by unhoused people and vagrants">' + (feature.properties['Q26a_a.on the sidewalks around the bus stop?_Occupancy by unhoused people and vagrants'] !== null ? autolinker.link(feature.properties['Q26a_a.on the sidewalks around the bus stop?_Occupancy by unhoused people and vagrants'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_a.on the sidewalks around the bus stop?_Occupancy by  vendors</th>\
+                        <td class="visible-with-data" id="Q26a_a.on the sidewalks around the bus stop?_Occupancy by  vendors">' + (feature.properties['Q26a_a.on the sidewalks around the bus stop?_Occupancy by  vendors'] !== null ? autolinker.link(feature.properties['Q26a_a.on the sidewalks around the bus stop?_Occupancy by  vendors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_a.on the sidewalks around the bus stop?_Sidewalks in disrepair (broken or uneven pavement, obstructions, etc.)</th>\
+                        <td class="visible-with-data" id="Q26a_a.on the sidewalks around the bus stop?_Sidewalks in disrepair (broken or uneven pavement, obstructions, etc.)">' + (feature.properties['Q26a_a.on the sidewalks around the bus stop?_Sidewalks in disrepair (broken or uneven pavement, obstructions, etc.)'] !== null ? autolinker.link(feature.properties['Q26a_a.on the sidewalks around the bus stop?_Sidewalks in disrepair (broken or uneven pavement, obstructions, etc.)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_a.on the sidewalks around the bus stop?_Large garbage bins blocking the sidewalk</th>\
+                        <td class="visible-with-data" id="Q26a_a.on the sidewalks around the bus stop?_Large garbage bins blocking the sidewalk">' + (feature.properties['Q26a_a.on the sidewalks around the bus stop?_Large garbage bins blocking the sidewalk'] !== null ? autolinker.link(feature.properties['Q26a_a.on the sidewalks around the bus stop?_Large garbage bins blocking the sidewalk'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_a.on the sidewalks around the bus stop?_None</th>\
+                        <td class="visible-with-data" id="Q26a_a.on the sidewalks around the bus stop?_None">' + (feature.properties['Q26a_a.on the sidewalks around the bus stop?_None'] !== null ? autolinker.link(feature.properties['Q26a_a.on the sidewalks around the bus stop?_None'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_b. at the bus stop_Presence of graffiti or posters</th>\
+                        <td class="visible-with-data" id="Q26a_b. at the bus stop_Presence of graffiti or posters">' + (feature.properties['Q26a_b. at the bus stop_Presence of graffiti or posters'] !== null ? autolinker.link(feature.properties['Q26a_b. at the bus stop_Presence of graffiti or posters'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_b. at the bus stop_Litter</th>\
+                        <td class="visible-with-data" id="Q26a_b. at the bus stop_Litter">' + (feature.properties['Q26a_b. at the bus stop_Litter'] !== null ? autolinker.link(feature.properties['Q26a_b. at the bus stop_Litter'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_b. at the bus stop_Occupancy by unhoused people and vagrants</th>\
+                        <td class="visible-with-data" id="Q26a_b. at the bus stop_Occupancy by unhoused people and vagrants">' + (feature.properties['Q26a_b. at the bus stop_Occupancy by unhoused people and vagrants'] !== null ? autolinker.link(feature.properties['Q26a_b. at the bus stop_Occupancy by unhoused people and vagrants'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_b. at the bus stop_Occupancy by  vendors</th>\
+                        <td class="visible-with-data" id="Q26a_b. at the bus stop_Occupancy by  vendors">' + (feature.properties['Q26a_b. at the bus stop_Occupancy by  vendors'] !== null ? autolinker.link(feature.properties['Q26a_b. at the bus stop_Occupancy by  vendors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_b. at the bus stop_Sidewalks in disrepair (broken or uneven pavement, obstructions, etc.)</th>\
+                        <td class="visible-with-data" id="Q26a_b. at the bus stop_Sidewalks in disrepair (broken or uneven pavement, obstructions, etc.)">' + (feature.properties['Q26a_b. at the bus stop_Sidewalks in disrepair (broken or uneven pavement, obstructions, etc.)'] !== null ? autolinker.link(feature.properties['Q26a_b. at the bus stop_Sidewalks in disrepair (broken or uneven pavement, obstructions, etc.)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_b. at the bus stop_Large garbage bins blocking the sidewalk</th>\
+                        <td class="visible-with-data" id="Q26a_b. at the bus stop_Large garbage bins blocking the sidewalk">' + (feature.properties['Q26a_b. at the bus stop_Large garbage bins blocking the sidewalk'] !== null ? autolinker.link(feature.properties['Q26a_b. at the bus stop_Large garbage bins blocking the sidewalk'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_b. at the bus stop_None</th>\
+                        <td class="visible-with-data" id="Q26a_b. at the bus stop_None">' + (feature.properties['Q26a_b. at the bus stop_None'] !== null ? autolinker.link(feature.properties['Q26a_b. at the bus stop_None'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_a. Occupancy by unhoused people and vagrants</th>\
+                        <td class="visible-with-data" id="Q26a_a. Occupancy by unhoused people and vagrants">' + (feature.properties['Q26a_a. Occupancy by unhoused people and vagrants'] !== null ? autolinker.link(feature.properties['Q26a_a. Occupancy by unhoused people and vagrants'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_a. Occupancy by  vendors</th>\
+                        <td class="visible-with-data" id="Q26a_a. Occupancy by  vendors">' + (feature.properties['Q26a_a. Occupancy by  vendors'] !== null ? autolinker.link(feature.properties['Q26a_a. Occupancy by  vendors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_b. at the bus stop_Occupancy by unhoused people and vagrants_1</th>\
+                        <td class="visible-with-data" id="Q26a_b. at the bus stop_Occupancy by unhoused people and vagrants_1">' + (feature.properties['Q26a_b. at the bus stop_Occupancy by unhoused people and vagrants_1'] !== null ? autolinker.link(feature.properties['Q26a_b. at the bus stop_Occupancy by unhoused people and vagrants_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q26a_b. at the bus stop_Occupancy by  vendors_1</th>\
+                        <td class="visible-with-data" id="Q26a_b. at the bus stop_Occupancy by  vendors_1">' + (feature.properties['Q26a_b. at the bus stop_Occupancy by  vendors_1'] !== null ? autolinker.link(feature.properties['Q26a_b. at the bus stop_Occupancy by  vendors_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q28. Is the bus stop and the surrounding area well lit during dark? (post 7 PM)</th>\
+                        <td class="visible-with-data" id="Q28. Is the bus stop and the surrounding area well lit during dark? (post 7 PM)">' + (feature.properties['Q28. Is the bus stop and the surrounding area well lit during dark? (post 7 PM)'] !== null ? autolinker.link(feature.properties['Q28. Is the bus stop and the surrounding area well lit during dark? (post 7 PM)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29. Source of light_Tube-lights/LED/CFL lights installed specifically for the bus stop</th>\
+                        <td class="visible-with-data" id="Q29. Source of light_Tube-lights/LED/CFL lights installed specifically for the bus stop">' + (feature.properties['Q29. Source of light_Tube-lights/LED/CFL lights installed specifically for the bus stop'] !== null ? autolinker.link(feature.properties['Q29. Source of light_Tube-lights/LED/CFL lights installed specifically for the bus stop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29. Source of light_Street lights near the bus stop</th>\
+                        <td class="visible-with-data" id="Q29. Source of light_Street lights near the bus stop">' + (feature.properties['Q29. Source of light_Street lights near the bus stop'] !== null ? autolinker.link(feature.properties['Q29. Source of light_Street lights near the bus stop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29. Source of light_Light from the back panel of the bus stop used for advertisements</th>\
+                        <td class="visible-with-data" id="Q29. Source of light_Light from the back panel of the bus stop used for advertisements">' + (feature.properties['Q29. Source of light_Light from the back panel of the bus stop used for advertisements'] !== null ? autolinker.link(feature.properties['Q29. Source of light_Light from the back panel of the bus stop used for advertisements'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29. Source of light_Lights from the top panel of the bus shelter used for advertisements</th>\
+                        <td class="visible-with-data" id="Q29. Source of light_Lights from the top panel of the bus shelter used for advertisements">' + (feature.properties['Q29. Source of light_Lights from the top panel of the bus shelter used for advertisements'] !== null ? autolinker.link(feature.properties['Q29. Source of light_Lights from the top panel of the bus shelter used for advertisements'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29. Source of light_Reflective lighting (e.g., reflecting light from nearby buildings and shops)</th>\
+                        <td class="visible-with-data" id="Q29. Source of light_Reflective lighting (e.g., reflecting light from nearby buildings and shops)">' + (feature.properties['Q29. Source of light_Reflective lighting (e.g., reflecting light from nearby buildings and shops)'] !== null ? autolinker.link(feature.properties['Q29. Source of light_Reflective lighting (e.g., reflecting light from nearby buildings and shops)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29. Source of light_High mast light at the crossing or traffic junction nearby</th>\
+                        <td class="visible-with-data" id="Q29. Source of light_High mast light at the crossing or traffic junction nearby">' + (feature.properties['Q29. Source of light_High mast light at the crossing or traffic junction nearby'] !== null ? autolinker.link(feature.properties['Q29. Source of light_High mast light at the crossing or traffic junction nearby'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29. Source of light_None</th>\
+                        <td class="visible-with-data" id="Q29. Source of light_None">' + (feature.properties['Q29. Source of light_None'] !== null ? autolinker.link(feature.properties['Q29. Source of light_None'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29. Source of light_Other (please specify)</th>\
+                        <td class="visible-with-data" id="Q29. Source of light_Other (please specify)">' + (feature.properties['Q29. Source of light_Other (please specify)'] !== null ? autolinker.link(feature.properties['Q29. Source of light_Other (please specify)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Others Specify_1</th>\
+                        <td class="visible-with-data" id="Others Specify_1">' + (feature.properties['Others Specify_1'] !== null ? autolinker.link(feature.properties['Others Specify_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29a. Is there a dark spot (complete darkness in the street/on the road) in 50m radius of the bus stop?</th>\
+                        <td class="visible-with-data" id="Q29a. Is there a dark spot (complete darkness in the street/on the road) in 50m radius of the bus stop?">' + (feature.properties['Q29a. Is there a dark spot (complete darkness in the street/on the road) in 50m radius of the bus stop?'] !== null ? autolinker.link(feature.properties['Q29a. Is there a dark spot (complete darkness in the street/on the road) in 50m radius of the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29b. No light from the nearby shops/residential areas/other sources</th>\
+                        <td class="visible-with-data" id="Q29b. No light from the nearby shops/residential areas/other sources">' + (feature.properties['Q29b. No light from the nearby shops/residential areas/other sources'] !== null ? autolinker.link(feature.properties['Q29b. No light from the nearby shops/residential areas/other sources'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29b. Absence of street light</th>\
+                        <td class="visible-with-data" id="Q29b. Absence of street light">' + (feature.properties['Q29b. Absence of street light'] !== null ? autolinker.link(feature.properties['Q29b. Absence of street light'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29b. Non functional street light</th>\
+                        <td class="visible-with-data" id="Q29b. Non functional street light">' + (feature.properties['Q29b. Non functional street light'] !== null ? autolinker.link(feature.properties['Q29b. Non functional street light'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29b. Not sure</th>\
+                        <td class="visible-with-data" id="Q29b. Not sure">' + (feature.properties['Q29b. Not sure'] !== null ? autolinker.link(feature.properties['Q29b. Not sure'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29b. Other</th>\
+                        <td class="visible-with-data" id="Q29b. Other">' + (feature.properties['Q29b. Other'] !== null ? autolinker.link(feature.properties['Q29b. Other'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q29b. Others Specify</th>\
+                        <td class="visible-with-data" id="Q29b. Others Specify">' + (feature.properties['Q29b. Others Specify'] !== null ? autolinker.link(feature.properties['Q29b. Others Specify'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q30a. Is there a bus stop flagpost near the bus stop indicating the presence of a bus stop there?</th>\
+                        <td class="visible-with-data" id="Q30a. Is there a bus stop flagpost near the bus stop indicating the presence of a bus stop there?">' + (feature.properties['Q30a. Is there a bus stop flagpost near the bus stop indicating the presence of a bus stop there?'] !== null ? autolinker.link(feature.properties['Q30a. Is there a bus stop flagpost near the bus stop indicating the presence of a bus stop there?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q30. Are there any signages at the bus stop?</th>\
+                        <td class="visible-with-data" id="Q30. Are there any signages at the bus stop?">' + (feature.properties['Q30. Are there any signages at the bus stop?'] !== null ? autolinker.link(feature.properties['Q30. Are there any signages at the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q31.Are they digital or printed?</th>\
+                        <td class="visible-with-data" id="Q31.Are they digital or printed?">' + (feature.properties['Q31.Are they digital or printed?'] !== null ? autolinker.link(feature.properties['Q31.Are they digital or printed?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q33. Are the signages multilingual?</th>\
+                        <td class="visible-with-data" id="Q33. Are the signages multilingual?">' + (feature.properties['Q33. Are the signages multilingual?'] !== null ? autolinker.link(feature.properties['Q33. Are the signages multilingual?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q34_Language of Signage_Tamil</th>\
+                        <td class="visible-with-data" id="Q34_Language of Signage_Tamil">' + (feature.properties['Q34_Language of Signage_Tamil'] !== null ? autolinker.link(feature.properties['Q34_Language of Signage_Tamil'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q34_Language of Signage_English</th>\
+                        <td class="visible-with-data" id="Q34_Language of Signage_English">' + (feature.properties['Q34_Language of Signage_English'] !== null ? autolinker.link(feature.properties['Q34_Language of Signage_English'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q34_Language of Signage_Hindi</th>\
+                        <td class="visible-with-data" id="Q34_Language of Signage_Hindi">' + (feature.properties['Q34_Language of Signage_Hindi'] !== null ? autolinker.link(feature.properties['Q34_Language of Signage_Hindi'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q34_Language of Signage_Others, specify</th>\
+                        <td class="visible-with-data" id="Q34_Language of Signage_Others, specify">' + (feature.properties['Q34_Language of Signage_Others, specify'] !== null ? autolinker.link(feature.properties['Q34_Language of Signage_Others, specify'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q35. Are the signages easily readable?</th>\
+                        <td class="visible-with-data" id="Q35. Are the signages easily readable?">' + (feature.properties['Q35. Are the signages easily readable?'] !== null ? autolinker.link(feature.properties['Q35. Are the signages easily readable?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_Bus Number</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_Bus Number">' + (feature.properties['Q36_Information on signage_Bus Number'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_Bus Number'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_Route of the buses</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_Route of the buses">' + (feature.properties['Q36_Information on signage_Route of the buses'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_Route of the buses'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_Destination of buses</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_Destination of buses">' + (feature.properties['Q36_Information on signage_Destination of buses'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_Destination of buses'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_Frequency of  buses</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_Frequency of  buses">' + (feature.properties['Q36_Information on signage_Frequency of  buses'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_Frequency of  buses'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_Time of arrival of the next bus</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_Time of arrival of the next bus">' + (feature.properties['Q36_Information on signage_Time of arrival of the next bus'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_Time of arrival of the next bus'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_Any helpline number/emergency numbers  (like emergency number 1913, women helpline No. 181 and child helpline no. 1098)</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_Any helpline number/emergency numbers  (like emergency number 1913, women helpline No. 181 and child helpline no. 1098)">' + (feature.properties['Q36_Information on signage_Any helpline number/emergency numbers  (like emergency number 1913, women helpline No. 181 and child helpline no. 1098)'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_Any helpline number/emergency numbers  (like emergency number 1913, women helpline No. 181 and child helpline no. 1098)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_Nearby toilet</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_Nearby toilet">' + (feature.properties['Q36_Information on signage_Nearby toilet'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_Nearby toilet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_Other nearby transit station</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_Other nearby transit station">' + (feature.properties['Q36_Information on signage_Other nearby transit station'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_Other nearby transit station'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_Name/location of the bus stop</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_Name/location of the bus stop">' + (feature.properties['Q36_Information on signage_Name/location of the bus stop'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_Name/location of the bus stop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_None</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_None">' + (feature.properties['Q36_Information on signage_None'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_None'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OQ36_Information on signage_ther, please specify</th>\
+                        <td class="visible-with-data" id="OQ36_Information on signage_ther, please specify">' + (feature.properties['OQ36_Information on signage_ther, please specify'] !== null ? autolinker.link(feature.properties['OQ36_Information on signage_ther, please specify'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q36_Information on signage_others specify</th>\
+                        <td class="visible-with-data" id="Q36_Information on signage_others specify">' + (feature.properties['Q36_Information on signage_others specify'] !== null ? autolinker.link(feature.properties['Q36_Information on signage_others specify'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q37. Is there any signage for differently abled persons at the bus stop?</th>\
+                        <td class="visible-with-data" id="Q37. Is there any signage for differently abled persons at the bus stop?">' + (feature.properties['Q37. Is there any signage for differently abled persons at the bus stop?'] !== null ? autolinker.link(feature.properties['Q37. Is there any signage for differently abled persons at the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q38. Are there braille form information panels on the bus stop to make it accessible for the visually impaired?</th>\
+                        <td class="visible-with-data" id="Q38. Are there braille form information panels on the bus stop to make it accessible for the visually impaired?">' + (feature.properties['Q38. Are there braille form information panels on the bus stop to make it accessible for the visually impaired?'] !== null ? autolinker.link(feature.properties['Q38. Are there braille form information panels on the bus stop to make it accessible for the visually impaired?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q39. Is there provision of audio information at the bus stop?</th>\
+                        <td class="visible-with-data" id="Q39. Is there provision of audio information at the bus stop?">' + (feature.properties['Q39. Is there provision of audio information at the bus stop?'] !== null ? autolinker.link(feature.properties['Q39. Is there provision of audio information at the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40. Are there any obstructions in the entry and exit path for the buses at the bus stop?</th>\
+                        <td class="visible-with-data" id="Q40. Are there any obstructions in the entry and exit path for the buses at the bus stop?">' + (feature.properties['Q40. Are there any obstructions in the entry and exit path for the buses at the bus stop?'] !== null ? autolinker.link(feature.properties['Q40. Are there any obstructions in the entry and exit path for the buses at the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Parked vehicles</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Parked vehicles">' + (feature.properties['Q40a_Obstructions_Parked vehicles'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Parked vehicles'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Tree</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Tree">' + (feature.properties['Q40a_Obstructions_Tree'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Tree'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Electric Pole</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Electric Pole">' + (feature.properties['Q40a_Obstructions_Electric Pole'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Electric Pole'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Streetlight</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Streetlight">' + (feature.properties['Q40a_Obstructions_Streetlight'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Streetlight'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Manhole</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Manhole">' + (feature.properties['Q40a_Obstructions_Manhole'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Manhole'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Fencing</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Fencing">' + (feature.properties['Q40a_Obstructions_Fencing'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Fencing'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Debris or litter</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Debris or litter">' + (feature.properties['Q40a_Obstructions_Debris or litter'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Debris or litter'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Large garbage bins</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Large garbage bins">' + (feature.properties['Q40a_Obstructions_Large garbage bins'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Large garbage bins'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Bollards near the kerb ramp</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Bollards near the kerb ramp">' + (feature.properties['Q40a_Obstructions_Bollards near the kerb ramp'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Bollards near the kerb ramp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Other obstructions</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Other obstructions">' + (feature.properties['Q40a_Obstructions_Other obstructions'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Other obstructions'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_<others specify></th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_<others specify>">' + (feature.properties['Q40a_Obstructions_<others specify>'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_<others specify>'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40. Are there any obstructions in the entry and exit path for the buses at the bus stop?_1</th>\
+                        <td class="visible-with-data" id="Q40. Are there any obstructions in the entry and exit path for the buses at the bus stop?_1">' + (feature.properties['Q40. Are there any obstructions in the entry and exit path for the buses at the bus stop?_1'] !== null ? autolinker.link(feature.properties['Q40. Are there any obstructions in the entry and exit path for the buses at the bus stop?_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40a_Obstructions_Parked vehicles_1</th>\
+                        <td class="visible-with-data" id="Q40a_Obstructions_Parked vehicles_1">' + (feature.properties['Q40a_Obstructions_Parked vehicles_1'] !== null ? autolinker.link(feature.properties['Q40a_Obstructions_Parked vehicles_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40b_Obstructions_Other obstructions</th>\
+                        <td class="visible-with-data" id="Q40b_Obstructions_Other obstructions">' + (feature.properties['Q40b_Obstructions_Other obstructions'] !== null ? autolinker.link(feature.properties['Q40b_Obstructions_Other obstructions'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q40c_Obstructions_Others specify</th>\
+                        <td class="visible-with-data" id="Q40c_Obstructions_Others specify">' + (feature.properties['Q40c_Obstructions_Others specify'] !== null ? autolinker.link(feature.properties['Q40c_Obstructions_Others specify'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q41. Are there surface markings for buses at the bus stop? (Yes / No)</th>\
+                        <td class="visible-with-data" id="Q41. Are there surface markings for buses at the bus stop? (Yes / No)">' + (feature.properties['Q41. Are there surface markings for buses at the bus stop? (Yes / No)'] !== null ? autolinker.link(feature.properties['Q41. Are there surface markings for buses at the bus stop? (Yes / No)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q42_a. Yes, but near the bus stop at a traffic signal</th>\
+                        <td class="visible-with-data" id="Q42_a. Yes, but near the bus stop at a traffic signal">' + (feature.properties['Q42_a. Yes, but near the bus stop at a traffic signal'] !== null ? autolinker.link(feature.properties['Q42_a. Yes, but near the bus stop at a traffic signal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q42_b. Yes, but in nearby shops/places</th>\
+                        <td class="visible-with-data" id="Q42_b. Yes, but in nearby shops/places">' + (feature.properties['Q42_b. Yes, but in nearby shops/places'] !== null ? autolinker.link(feature.properties['Q42_b. Yes, but in nearby shops/places'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q42_c. No CCTV cameras found</th>\
+                        <td class="visible-with-data" id="Q42_c. No CCTV cameras found">' + (feature.properties['Q42_c. No CCTV cameras found'] !== null ? autolinker.link(feature.properties['Q42_c. No CCTV cameras found'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q42_d. At the bus stand</th>\
+                        <td class="visible-with-data" id="Q42_d. At the bus stand">' + (feature.properties['Q42_d. At the bus stand'] !== null ? autolinker.link(feature.properties['Q42_d. At the bus stand'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q43. How many CCTV cameras are visible/noticeable there?</th>\
+                        <td class="visible-with-data" id="Q43. How many CCTV cameras are visible/noticeable there?">' + (feature.properties['Q43. How many CCTV cameras are visible/noticeable there?'] !== null ? autolinker.link(feature.properties['Q43. How many CCTV cameras are visible/noticeable there?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q44_Government</th>\
+                        <td class="visible-with-data" id="Q44_Government">' + (feature.properties['Q44_Government'] !== null ? autolinker.link(feature.properties['Q44_Government'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q44_Private institution</th>\
+                        <td class="visible-with-data" id="Q44_Private institution">' + (feature.properties['Q44_Private institution'] !== null ? autolinker.link(feature.properties['Q44_Private institution'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q44_Not sure</th>\
+                        <td class="visible-with-data" id="Q44_Not sure">' + (feature.properties['Q44_Not sure'] !== null ? autolinker.link(feature.properties['Q44_Not sure'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q45. Is there any traffic police man/police van/chowki at the traffic signal or near it?</th>\
+                        <td class="visible-with-data" id="Q45. Is there any traffic police man/police van/chowki at the traffic signal or near it?">' + (feature.properties['Q45. Is there any traffic police man/police van/chowki at the traffic signal or near it?'] !== null ? autolinker.link(feature.properties['Q45. Is there any traffic police man/police van/chowki at the traffic signal or near it?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q45. Is there any traffic police man/police van/chowki at the traffic signal or near it?_1</th>\
+                        <td class="visible-with-data" id="Q45. Is there any traffic police man/police van/chowki at the traffic signal or near it?_1">' + (feature.properties['Q45. Is there any traffic police man/police van/chowki at the traffic signal or near it?_1'] !== null ? autolinker.link(feature.properties['Q45. Is there any traffic police man/police van/chowki at the traffic signal or near it?_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q47. Are there security personnel stationed  in the vicinity, such as at nearby shops, offices, residential complexes, banks, ATMs, etc?</th>\
+                        <td class="visible-with-data" id="Q47. Are there security personnel stationed  in the vicinity, such as at nearby shops, offices, residential complexes, banks, ATMs, etc?">' + (feature.properties['Q47. Are there security personnel stationed  in the vicinity, such as at nearby shops, offices, residential complexes, banks, ATMs, etc?'] !== null ? autolinker.link(feature.properties['Q47. Are there security personnel stationed  in the vicinity, such as at nearby shops, offices, residential complexes, banks, ATMs, etc?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q47. Are there security personnel stationed  in the vicinity, such as at nearby shops, offices, residential complexes, banks, ATMs, etc?_1</th>\
+                        <td class="visible-with-data" id="Q47. Are there security personnel stationed  in the vicinity, such as at nearby shops, offices, residential complexes, banks, ATMs, etc?_1">' + (feature.properties['Q47. Are there security personnel stationed  in the vicinity, such as at nearby shops, offices, residential complexes, banks, ATMs, etc?_1'] !== null ? autolinker.link(feature.properties['Q47. Are there security personnel stationed  in the vicinity, such as at nearby shops, offices, residential complexes, banks, ATMs, etc?_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q48. Is the area near or surrounding the bus stop generally  isolated or crowded?</th>\
+                        <td class="visible-with-data" id="Q48. Is the area near or surrounding the bus stop generally  isolated or crowded?">' + (feature.properties['Q48. Is the area near or surrounding the bus stop generally  isolated or crowded?'] !== null ? autolinker.link(feature.properties['Q48. Is the area near or surrounding the bus stop generally  isolated or crowded?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q48. Is the area near or surrounding the bus stop generally  isolated or crowded?_1</th>\
+                        <td class="visible-with-data" id="Q48. Is the area near or surrounding the bus stop generally  isolated or crowded?_1">' + (feature.properties['Q48. Is the area near or surrounding the bus stop generally  isolated or crowded?_1'] !== null ? autolinker.link(feature.properties['Q48. Is the area near or surrounding the bus stop generally  isolated or crowded?_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q49. Is there any liquor shop within 50m radius of  the bus stop?</th>\
+                        <td class="visible-with-data" id="Q49. Is there any liquor shop within 50m radius of  the bus stop?">' + (feature.properties['Q49. Is there any liquor shop within 50m radius of  the bus stop?'] !== null ? autolinker.link(feature.properties['Q49. Is there any liquor shop within 50m radius of  the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q50. Is there any shop or spot or isolated area near the bus stop where men gather?</th>\
+                        <td class="visible-with-data" id="Q50. Is there any shop or spot or isolated area near the bus stop where men gather?">' + (feature.properties['Q50. Is there any shop or spot or isolated area near the bus stop where men gather?'] !== null ? autolinker.link(feature.properties['Q50. Is there any shop or spot or isolated area near the bus stop where men gather?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q50. Is there any shop or spot or isolated area near the bus stop where men gather?_1</th>\
+                        <td class="visible-with-data" id="Q50. Is there any shop or spot or isolated area near the bus stop where men gather?_1">' + (feature.properties['Q50. Is there any shop or spot or isolated area near the bus stop where men gather?_1'] !== null ? autolinker.link(feature.properties['Q50. Is there any shop or spot or isolated area near the bus stop where men gather?_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q51_a. Café/Restaurant</th>\
+                        <td class="visible-with-data" id="Q51_a. Café/Restaurant">' + (feature.properties['Q51_a. Café/Restaurant'] !== null ? autolinker.link(feature.properties['Q51_a. Café/Restaurant'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q51_b. Tea shop</th>\
+                        <td class="visible-with-data" id="Q51_b. Tea shop">' + (feature.properties['Q51_b. Tea shop'] !== null ? autolinker.link(feature.properties['Q51_b. Tea shop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q51_c. Convinience store</th>\
+                        <td class="visible-with-data" id="Q51_c. Convinience store">' + (feature.properties['Q51_c. Convinience store'] !== null ? autolinker.link(feature.properties['Q51_c. Convinience store'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q51_d. Mall</th>\
+                        <td class="visible-with-data" id="Q51_d. Mall">' + (feature.properties['Q51_d. Mall'] !== null ? autolinker.link(feature.properties['Q51_d. Mall'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q51_e. Bank</th>\
+                        <td class="visible-with-data" id="Q51_e. Bank">' + (feature.properties['Q51_e. Bank'] !== null ? autolinker.link(feature.properties['Q51_e. Bank'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q51_f. ATM</th>\
+                        <td class="visible-with-data" id="Q51_f. ATM">' + (feature.properties['Q51_f. ATM'] !== null ? autolinker.link(feature.properties['Q51_f. ATM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q51_h. None</th>\
+                        <td class="visible-with-data" id="Q51_h. None">' + (feature.properties['Q51_h. None'] !== null ? autolinker.link(feature.properties['Q51_h. None'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q51_g. Others</th>\
+                        <td class="visible-with-data" id="Q51_g. Others">' + (feature.properties['Q51_g. Others'] !== null ? autolinker.link(feature.properties['Q51_g. Others'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Others specify_2</th>\
+                        <td class="visible-with-data" id="Others specify_2">' + (feature.properties['Others specify_2'] !== null ? autolinker.link(feature.properties['Others specify_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q52. Are there any public toilets in the 50m radius of the bus stop?</th>\
+                        <td class="visible-with-data" id="Q52. Are there any public toilets in the 50m radius of the bus stop?">' + (feature.properties['Q52. Are there any public toilets in the 50m radius of the bus stop?'] !== null ? autolinker.link(feature.properties['Q52. Are there any public toilets in the 50m radius of the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q52a.  Is there a separate toilet facility for women?</th>\
+                        <td class="visible-with-data" id="Q52a.  Is there a separate toilet facility for women?">' + (feature.properties['Q52a.  Is there a separate toilet facility for women?'] !== null ? autolinker.link(feature.properties['Q52a.  Is there a separate toilet facility for women?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q53. Is the toilet open for use or closed?</th>\
+                        <td class="visible-with-data" id="Q53. Is the toilet open for use or closed?">' + (feature.properties['Q53. Is the toilet open for use or closed?'] !== null ? autolinker.link(feature.properties['Q53. Is the toilet open for use or closed?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q53. Is the toilet open for use or closed?_1</th>\
+                        <td class="visible-with-data" id="Q53. Is the toilet open for use or closed?_1">' + (feature.properties['Q53. Is the toilet open for use or closed?_1'] !== null ? autolinker.link(feature.properties['Q53. Is the toilet open for use or closed?_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q54. Is there any leakage from the public toilet causing inconvenience to the pedestrians/bus passengers waiting for the bus?</th>\
+                        <td class="visible-with-data" id="Q54. Is there any leakage from the public toilet causing inconvenience to the pedestrians/bus passengers waiting for the bus?">' + (feature.properties['Q54. Is there any leakage from the public toilet causing inconvenience to the pedestrians/bus passengers waiting for the bus?'] !== null ? autolinker.link(feature.properties['Q54. Is there any leakage from the public toilet causing inconvenience to the pedestrians/bus passengers waiting for the bus?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q55. Is there any public drinking water facility near the bus stop?</th>\
+                        <td class="visible-with-data" id="Q55. Is there any public drinking water facility near the bus stop?">' + (feature.properties['Q55. Is there any public drinking water facility near the bus stop?'] !== null ? autolinker.link(feature.properties['Q55. Is there any public drinking water facility near the bus stop?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q55a. Is it dispensing water?</th>\
+                        <td class="visible-with-data" id="Q55a. Is it dispensing water?">' + (feature.properties['Q55a. Is it dispensing water?'] !== null ? autolinker.link(feature.properties['Q55a. Is it dispensing water?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q56. Is there a waste collection bin in the vicinity of the bus stop? (50m radius)</th>\
+                        <td class="visible-with-data" id="Q56. Is there a waste collection bin in the vicinity of the bus stop? (50m radius)">' + (feature.properties['Q56. Is there a waste collection bin in the vicinity of the bus stop? (50m radius)'] !== null ? autolinker.link(feature.properties['Q56. Is there a waste collection bin in the vicinity of the bus stop? (50m radius)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q57_Auto stand</th>\
+                        <td class="visible-with-data" id="Q57_Auto stand">' + (feature.properties['Q57_Auto stand'] !== null ? autolinker.link(feature.properties['Q57_Auto stand'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q57_Bus terminal</th>\
+                        <td class="visible-with-data" id="Q57_Bus terminal">' + (feature.properties['Q57_Bus terminal'] !== null ? autolinker.link(feature.properties['Q57_Bus terminal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q57_Metro station</th>\
+                        <td class="visible-with-data" id="Q57_Metro station">' + (feature.properties['Q57_Metro station'] !== null ? autolinker.link(feature.properties['Q57_Metro station'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q57_local train station</th>\
+                        <td class="visible-with-data" id="Q57_local train station">' + (feature.properties['Q57_local train station'] !== null ? autolinker.link(feature.properties['Q57_local train station'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q57_Shared auto stop</th>\
+                        <td class="visible-with-data" id="Q57_Shared auto stop">' + (feature.properties['Q57_Shared auto stop'] !== null ? autolinker.link(feature.properties['Q57_Shared auto stop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q57_Public cycle sharing facility</th>\
+                        <td class="visible-with-data" id="Q57_Public cycle sharing facility">' + (feature.properties['Q57_Public cycle sharing facility'] !== null ? autolinker.link(feature.properties['Q57_Public cycle sharing facility'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q57_None</th>\
+                        <td class="visible-with-data" id="Q57_None">' + (feature.properties['Q57_None'] !== null ? autolinker.link(feature.properties['Q57_None'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q58_Direction_Auto stand :</th>\
+                        <td class="visible-with-data" id="Q58_Direction_Auto stand :">' + (feature.properties['Q58_Direction_Auto stand :'] !== null ? autolinker.link(feature.properties['Q58_Direction_Auto stand :'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q58_Direction_Bus terminal :</th>\
+                        <td class="visible-with-data" id="Q58_Direction_Bus terminal :">' + (feature.properties['Q58_Direction_Bus terminal :'] !== null ? autolinker.link(feature.properties['Q58_Direction_Bus terminal :'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q58_Direction_Metro station :</th>\
+                        <td class="visible-with-data" id="Q58_Direction_Metro station :">' + (feature.properties['Q58_Direction_Metro station :'] !== null ? autolinker.link(feature.properties['Q58_Direction_Metro station :'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q58_Direction_local train station :</th>\
+                        <td class="visible-with-data" id="Q58_Direction_local train station :">' + (feature.properties['Q58_Direction_local train station :'] !== null ? autolinker.link(feature.properties['Q58_Direction_local train station :'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q58_Direction_Shared auto stop :</th>\
+                        <td class="visible-with-data" id="Q58_Direction_Shared auto stop :">' + (feature.properties['Q58_Direction_Shared auto stop :'] !== null ? autolinker.link(feature.properties['Q58_Direction_Shared auto stop :'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q58_Direction_Public cycle sharing facility :</th>\
+                        <td class="visible-with-data" id="Q58_Direction_Public cycle sharing facility :">' + (feature.properties['Q58_Direction_Public cycle sharing facility :'] !== null ? autolinker.link(feature.properties['Q58_Direction_Public cycle sharing facility :'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q59_Approx. Distance_Auto stand</th>\
+                        <td class="visible-with-data" id="Q59_Approx. Distance_Auto stand">' + (feature.properties['Q59_Approx. Distance_Auto stand'] !== null ? autolinker.link(feature.properties['Q59_Approx. Distance_Auto stand'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q59_Approx. Distance_Bus Terminal</th>\
+                        <td class="visible-with-data" id="Q59_Approx. Distance_Bus Terminal">' + (feature.properties['Q59_Approx. Distance_Bus Terminal'] !== null ? autolinker.link(feature.properties['Q59_Approx. Distance_Bus Terminal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q59_Approx. Distance_Metro Station</th>\
+                        <td class="visible-with-data" id="Q59_Approx. Distance_Metro Station">' + (feature.properties['Q59_Approx. Distance_Metro Station'] !== null ? autolinker.link(feature.properties['Q59_Approx. Distance_Metro Station'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q59_Approx. Distance_Local Train Station</th>\
+                        <td class="visible-with-data" id="Q59_Approx. Distance_Local Train Station">' + (feature.properties['Q59_Approx. Distance_Local Train Station'] !== null ? autolinker.link(feature.properties['Q59_Approx. Distance_Local Train Station'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q59_Approx. Distance_Shared Auto Shop</th>\
+                        <td class="visible-with-data" id="Q59_Approx. Distance_Shared Auto Shop">' + (feature.properties['Q59_Approx. Distance_Shared Auto Shop'] !== null ? autolinker.link(feature.properties['Q59_Approx. Distance_Shared Auto Shop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q59_Approx. Distance_Public cycle sharing facility</th>\
+                        <td class="visible-with-data" id="Q59_Approx. Distance_Public cycle sharing facility">' + (feature.properties['Q59_Approx. Distance_Public cycle sharing facility'] !== null ? autolinker.link(feature.properties['Q59_Approx. Distance_Public cycle sharing facility'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q60. well lit pathway after dark_Auto Stand</th>\
+                        <td class="visible-with-data" id="Q60. well lit pathway after dark_Auto Stand">' + (feature.properties['Q60. well lit pathway after dark_Auto Stand'] !== null ? autolinker.link(feature.properties['Q60. well lit pathway after dark_Auto Stand'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q60. well lit pathway after dark_Bus Terminal</th>\
+                        <td class="visible-with-data" id="Q60. well lit pathway after dark_Bus Terminal">' + (feature.properties['Q60. well lit pathway after dark_Bus Terminal'] !== null ? autolinker.link(feature.properties['Q60. well lit pathway after dark_Bus Terminal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q60. well lit pathway after dark_Metro Station</th>\
+                        <td class="visible-with-data" id="Q60. well lit pathway after dark_Metro Station">' + (feature.properties['Q60. well lit pathway after dark_Metro Station'] !== null ? autolinker.link(feature.properties['Q60. well lit pathway after dark_Metro Station'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q60. well lit pathway after dark_Local train Station*</th>\
+                        <td class="visible-with-data" id="Q60. well lit pathway after dark_Local train Station*">' + (feature.properties['Q60. well lit pathway after dark_Local train Station*'] !== null ? autolinker.link(feature.properties['Q60. well lit pathway after dark_Local train Station*'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q60. well lit pathway after dark_Shared Auto</th>\
+                        <td class="visible-with-data" id="Q60. well lit pathway after dark_Shared Auto">' + (feature.properties['Q60. well lit pathway after dark_Shared Auto'] !== null ? autolinker.link(feature.properties['Q60. well lit pathway after dark_Shared Auto'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q60. well lit pathway after dark_Public cycle sharing facility</th>\
+                        <td class="visible-with-data" id="Q60. well lit pathway after dark_Public cycle sharing facility">' + (feature.properties['Q60. well lit pathway after dark_Public cycle sharing facility'] !== null ? autolinker.link(feature.properties['Q60. well lit pathway after dark_Public cycle sharing facility'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q66. Is the bus stop near a road junction?</th>\
+                        <td class="visible-with-data" id="Q66. Is the bus stop near a road junction?">' + (feature.properties['Q66. Is the bus stop near a road junction?'] !== null ? autolinker.link(feature.properties['Q66. Is the bus stop near a road junction?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q64_Lux reading_Inside the shelter</th>\
+                        <td class="visible-with-data" id="Q64_Lux reading_Inside the shelter">' + (feature.properties['Q64_Lux reading_Inside the shelter'] !== null ? autolinker.link(feature.properties['Q64_Lux reading_Inside the shelter'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q64_Lux reading_Adjacent to the shelter in the direction of the bus</th>\
+                        <td class="visible-with-data" id="Q64_Lux reading_Adjacent to the shelter in the direction of the bus">' + (feature.properties['Q64_Lux reading_Adjacent to the shelter in the direction of the bus'] !== null ? autolinker.link(feature.properties['Q64_Lux reading_Adjacent to the shelter in the direction of the bus'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Q64_Lux reading_Adjacent to the shelter in the opposite direction of the bus</th>\
+                        <td class="visible-with-data" id="Q64_Lux reading_Adjacent to the shelter in the opposite direction of the bus">' + (feature.properties['Q64_Lux reading_Adjacent to the shelter in the opposite direction of the bus'] !== null ? autolinker.link(feature.properties['Q64_Lux reading_Adjacent to the shelter in the opposite direction of the bus'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LATITUDE</th>\
+                        <td class="visible-with-data" id="LATITUDE">' + (feature.properties['LATITUDE'] !== null ? autolinker.link(feature.properties['LATITUDE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LONGITUDE</th>\
+                        <td class="visible-with-data" id="LONGITUDE">' + (feature.properties['LONGITUDE'] !== null ? autolinker.link(feature.properties['LONGITUDE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Busstopswith40LUXReadings_11_0() {
+            return {
+                pane: 'pane_Busstopswith40LUXReadings_11',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,253,72,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Busstopswith40LUXReadings_11');
+        map.getPane('pane_Busstopswith40LUXReadings_11').style.zIndex = 411;
+        map.getPane('pane_Busstopswith40LUXReadings_11').style['mix-blend-mode'] = 'normal';
+        var layer_Busstopswith40LUXReadings_11 = new L.geoJson(json_Busstopswith40LUXReadings_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Busstopswith40LUXReadings_11',
+            layerName: 'layer_Busstopswith40LUXReadings_11',
+            pane: 'pane_Busstopswith40LUXReadings_11',
+            onEachFeature: pop_Busstopswith40LUXReadings_11,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Busstopswith40LUXReadings_11_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Busstopswith40LUXReadings_11);
+        map.addLayer(layer_Busstopswith40LUXReadings_11);
+        var overlaysTree = [
+            {label: '<img src="legend/Busstopswith40LUXReadings_11.png" /> Bus stops with < 40 LUX Readings', layer: layer_Busstopswith40LUXReadings_11},
+            {label: '<img src="legend/Route29C_10.png" /> Route 29C', layer: layer_Route29C_10},
+            {label: '<img src="legend/Route17D_9.png" /> Route 17D', layer: layer_Route17D_9},
+            {label: '<img src="legend/Route32B_8.png" /> Route 32B', layer: layer_Route32B_8},
+            {label: '<img src="legend/Route102K_7.png" /> Route 102K', layer: layer_Route102K_7},
+            {label: '<img src="legend/Route48C_6.png" /> Route 48C', layer: layer_Route48C_6},
+            {label: '<img src="legend/Route4_5.png" /> Route 4', layer: layer_Route4_5},
+            {label: '<img src="legend/Route2A_4.png" /> Route 2A', layer: layer_Route2A_4},
+            {label: '<img src="legend/Route26_3.png" /> Route 26', layer: layer_Route26_3},
+            {label: '<img src="legend/Route159A_2.png" /> Route 159A', layer: layer_Route159A_2},
+            {label: '<img src="legend/Route119_1.png" /> Route 119', layer: layer_Route119_1},
+            {label: "OpenStreetMap", layer: layer_OpenStreetMap_0},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: true,
+        });
+        lay.addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
